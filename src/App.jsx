@@ -21,7 +21,8 @@ function getEmoji(name) {
 const EMPTY_FORM = { name: "", price: "", img: "", desc: "", phone: "" };
 
 export default function App() {
-  const [tab, setTab] = useState("catalog");
+  const isAdmin = window.location.hash === "#/admin";
+  const [tab, setTab] = useState(isAdmin ? "admin" : "catalog");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState(EMPTY_FORM);
@@ -123,6 +124,7 @@ export default function App() {
         <div className="header-icon">🏗️</div>
         <div>
           <h1 className="header-title">სამშენებლო კატალოგი</h1>
+          <p className="header-sub">კლიფსები, ვედრები და სხვა</p>
         </div>
       </header>
 
@@ -130,9 +132,11 @@ export default function App() {
         <button className={`tab ${tab === "catalog" ? "active" : ""}`} onClick={() => setTab("catalog")}>
           კატალოგი <span className="badge">{products.length}</span>
         </button>
-        {/* <button className={`tab ${tab === "admin" ? "active" : ""}`} onClick={() => setTab("admin")}>
-          ადმინი
-        </button> */}
+        {isAdmin && (
+          <button className={`tab ${tab === "admin" ? "active" : ""}`} onClick={() => setTab("admin")}>
+            ადმინი
+          </button>
+        )}
       </div>
 
       {/* ── CATALOG ── */}
